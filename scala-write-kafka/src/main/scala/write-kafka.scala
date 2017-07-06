@@ -1,7 +1,7 @@
 import java.util.Properties
 import org.apache.kafka.clients.producer._
 
-object WriteSocket {
+object WriteKafka {
   def main(args: Array[String]) {
     val  props = new Properties()
     props.put("bootstrap.servers", "172.31.117.46:9092,172.31.117.47:9092,172.31.117.65:9092")
