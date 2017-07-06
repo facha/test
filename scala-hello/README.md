@@ -2,7 +2,7 @@
 
 - Install SBT
 - Build, Assembly (self-sufficient jar)
-- Execute (java has to be installed and on your path
+- Execute (java has to be installed and on your path)
 ```
 curl https://bintray.com/sbt/rpm/rpm | sudo tee /etc/yum.repos.d/bintray-sbt-rpm.repo
 yum -y install sbt
