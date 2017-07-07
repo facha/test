@@ -14,6 +14,11 @@ object ReadKafka {
     val kafkaParams = Map[String, String]("bootstrap.servers" -> brokers, "auto.offset.reset" -> "smallest")
     val messages = KafkaUtils.createDirectStream[String, String, StringDecoder, StringDecoder](
       ssc, kafkaParams, Set(topic))
+    messages.foreachRDD(rdd => if (!rdd.isEmpty) {
+      // First 10 messages in this batch
+      rdd.take(10).map(x => x._2).foreach(println)
+    })
+    // Total No of messages in this batch
     messages.count().print()
 
     ssc.start()
