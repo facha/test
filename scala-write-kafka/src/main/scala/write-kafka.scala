@@ -4,13 +4,13 @@ import org.apache.kafka.clients.producer._
 object WriteKafka {
   def main(args: Array[String]) {
     val  props = new Properties()
-    props.put("bootstrap.servers", "172.31.117.46:9092,172.31.117.47:9092,172.31.117.65:9092")
+    props.put("bootstrap.servers", "172.26.18.181:9092,172.26.27.103:9092,172.26.17.9:9092")
     props.put("key.serializer", "org.apache.kafka.common.serialization.StringSerializer")
     props.put("value.serializer", "org.apache.kafka.common.serialization.StringSerializer")
 
     val producer = new KafkaProducer[String, String](props)
     val topic = "test"
-    for(i<- 1 to 50){
+    for(i<- 1 to 1000){
       val date = util.Random.nextInt(1500000000).toString()
       val lat = "%2.2f".format(-90+180*util.Random.nextFloat)
       val lng = "%2.2f".format(-180+360*util.Random.nextFloat)

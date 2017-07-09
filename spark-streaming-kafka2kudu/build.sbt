@@ -1,6 +1,6 @@
 import AssemblyKeys._
 assemblySettings
-name := "spark-streaming-kafka2hbase"
+name := "spark-streaming-kafka2kudu"
 version := "0.0.1"
 scalaVersion := "2.10.5"
 
@@ -8,9 +8,7 @@ libraryDependencies ++= Seq(
   "org.apache.spark" %% "spark-core" % "1.6.0" % "provided",
   "org.apache.spark" % "spark-streaming_2.10" % "1.6.0" % "provided",
   "org.apache.spark" % "spark-streaming-kafka_2.10" % "1.6.0",
-  "org.apache.hadoop" % "hadoop-common" % "2.6.0",
-  "org.apache.hbase" % "hbase-client" % "1.2.0",
-  "org.apache.hbase" % "hbase-common" % "1.2.0"
+  "org.apache.kudu" % "kudu-client" % "1.3.0"
 )
 mergeStrategy in assembly := {
   case x if x.startsWith("META-INF") => MergeStrategy.discard // Bumf

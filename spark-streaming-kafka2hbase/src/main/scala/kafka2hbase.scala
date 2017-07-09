@@ -10,7 +10,7 @@ import org.apache.hadoop.hbase.util.Bytes
 
 object Kafka2Hbase {
   def main(args: Array[String]) {
-    val brokers = "172.31.117.46:9092,172.31.117.47:9092,172.31.117.65:9092"
+    val brokers = "172.26.18.181:9092,172.26.27.103:9092,172.26.17.9:9092"
     val topic = "test"
 
     val sparkConf = new SparkConf().setAppName("ReadKafkaTopic")
@@ -20,14 +20,24 @@ object Kafka2Hbase {
       ssc, kafkaParams, Set(topic))
     messages.foreachRDD(rdd => if (!rdd.isEmpty) {
       rdd.foreach(x => {
+        val (kafka_key, kafka_value) = x
+        val kafka_value_list = kafka_value.split(",")
+        val timestamp = kafka_value_list(0)
+        val lat = kafka_value_list(1)
+        val lng = kafka_value_list(2)
+        val value = kafka_value_list(3)
+
         val conf  = HBaseConfiguration.create()
-        conf.set("hbase.zookeeper.quorum", "172.31.117.197");
+        conf.set("hbase.zookeeper.quorum", "172.26.24.152");
         conf.set("hbase.zookeeper.property.clientPort", "2181");
         val con = ConnectionFactory.createConnection(conf)
         val table = con.getTable(TableName.valueOf("table1"))
-        val put = new Put(Bytes.toBytes(x._2))
+        val put = new Put(Bytes.toBytes(kafka_value.hashCode()))
         val cf = Bytes.toBytes("col_family1")
-        put.addColumn(cf, Bytes.toBytes("column1"), Bytes.toBytes(x._2))
+        put.addColumn(cf, Bytes.toBytes("timestamp"), Bytes.toBytes(timestamp))
+        put.addColumn(cf, Bytes.toBytes("lat"), Bytes.toBytes(lat))
+        put.addColumn(cf, Bytes.toBytes("lng"), Bytes.toBytes(lng))
+        put.addColumn(cf, Bytes.toBytes("value"), Bytes.toBytes(value))
         table.put(put)
         con.close()
       })
