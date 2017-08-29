@@ -7,7 +7,7 @@ object RwSolr {
   def main(args: Array[String]) {
     val zk_conn = "172.31.113.184:2181/solr"
     val server = new CloudSolrServer(zk_conn)
-    server.setDefaultCollection("tutorial_col");
+    server.setDefaultCollection("test");
     for (i <- 1 to 100) {
       val date = util.Random.nextInt(1500000000).toString()
       val lat = "%2.2f".format(-90+180*util.Random.nextFloat).toString()
