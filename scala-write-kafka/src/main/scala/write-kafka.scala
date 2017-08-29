@@ -3,8 +3,8 @@ import org.apache.kafka.clients.producer._
 
 object WriteKafka {
   def main(args: Array[String]) {
-    val  props = new Properties()
-    props.put("bootstrap.servers", "172.26.18.181:9092,172.26.27.103:9092,172.26.17.9:9092")
+    val props = new Properties()
+    props.put("bootstrap.servers", "172.31.113.188:9092,172.31.113.210:9092,172.31.113.224:9092")
     props.put("key.serializer", "org.apache.kafka.common.serialization.StringSerializer")
     props.put("value.serializer", "org.apache.kafka.common.serialization.StringSerializer")
 
